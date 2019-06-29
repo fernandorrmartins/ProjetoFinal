@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Marca extends Model
 {
-    protected $fillable = ['Identificador', 'Marca', 'Descricao'];
+    protected $fillable = ['Identificador', 'Nome', 'Descricao'];
 }
