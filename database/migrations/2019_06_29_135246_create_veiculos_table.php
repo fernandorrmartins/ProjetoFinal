@@ -15,7 +15,12 @@ class CreateVeiculosTable extends Migration
     {
         Schema::create('veiculos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            
+            $table->string('ano_lancamento');
+            $table->bigInteger('marca')->unsigned();
+            $table->foreign('marca')->references('id')->on('marcas');
+            $table->string('descricao');
+            $table->integer('tipo_veiculo');
+            $table->string('imagem');
             $table->timestamps();
         });
     }
