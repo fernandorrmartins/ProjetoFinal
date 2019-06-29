@@ -82,4 +82,8 @@ class MarcaController extends Controller
     {
         //
     }
+
+    public function getAll(){
+        
+    }
 }
