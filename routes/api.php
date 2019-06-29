@@ -16,3 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('/listarMarcas', 'MarcaController@getAll');
+Route::get('/marca/get/{id}', 'MarcaController@show');
+Route::post('/marca/update/{id}', 'MarcaController@update');
+Route::post('/marca/store', 'MarcaController@store');
