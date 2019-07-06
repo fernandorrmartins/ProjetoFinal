@@ -24,7 +24,7 @@ class MarcaController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -35,7 +35,18 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nome'=>'required|max:255',
+            'descricao'=>'required|max:255',]) ;
+        $marca = Marca :: create ( $validatedData) ;
+
+        $resultado = [
+            'errorCode' => 0,
+            'mensagem' => 'Marca criada com sucesso!',
+            'marca' => $marca,
+        ];
+
+        return response()->json($resultado);
     }
 
     /**
@@ -46,7 +57,13 @@ class MarcaController extends Controller
      */
     public function show($id)
     {
-        //
+        $marca = Marca::find($id);
+        if(is_null($marca))
+            $marca = [
+                'errorCode' => 1,
+                'mensagem' => 'Marca não encontrado!',
+            ];
+        return response()->json($marca);
     }
 
     /**
@@ -57,7 +74,7 @@ class MarcaController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -69,7 +86,17 @@ class MarcaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'nome'=>'required|max:255',
+            'descricao'=>'required|max:255',]) ;
+        Marca::whereId($id)->update($validatedData);
+
+        $resultado = [
+            'errorCode' => 0,
+            'mensagem' => 'Marca atualizada com sucesso!',
+        ];
+
+        return response()->json($resultado);
     }
 
     /**
@@ -80,10 +107,26 @@ class MarcaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $marca = Marca::findOrFail($id);
+        $marca->delete();
+
+        $resultado = [
+            'errorCode' => 0,
+            'mensagem' => 'Registro deletado com sucesso!',
+        ];
+
+        return response()->json($resultado);
     }
 
     public function getAll(){
-        
+        $marca = Marca::all();
+        if(is_null($marca)){
+            $marca->errorCode = 1;
+            $marca->mensagem = 'Não foi possível recuperar a lista de marcas!';
+        } else {
+            $marca->errorCode = 0;
+            $marca->mensagem = 'Lista recuperada com sucesso!';
+        }
+        return response()->json($marca);
     }
 }
